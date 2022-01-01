@@ -102,18 +102,17 @@ public class FormPayPage extends CommonActionOnpages {
 
             typeInto(telefono, customer.getPhone());
 
-
             while (getAtributeElement(radioButtonBaloto,"checked")==null){
-                scrollTo(pagoBaloto);
                 addWaitByVisibility(pagoBaloto,4);
+                scrollTo(pagoBaloto);
                 clickWithAccion(pagoBaloto);
            }
 
 
             while(getAtributeElement(contenedorTerminosCondiciones,"class")
                   .equals("form-row validate-required")) {
-                scrollTo(contenedorTerminosCondiciones);
                 addWaitByVisibility(checkBoxTerminos,4);
+                scrollTo(contenedorTerminosCondiciones);
                 clickWithAccion(checkBoxTerminos);
             }
             scrollTo(btnRealizarPedido);
