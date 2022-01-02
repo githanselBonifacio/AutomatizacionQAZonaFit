@@ -13,8 +13,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
-import static java.util.logging.Logger.global;
-
 public class BuyProductsOfferSteps extends ConfiWebDriver {
     private Customer customerSCE2;
     private int totalFacturado;
