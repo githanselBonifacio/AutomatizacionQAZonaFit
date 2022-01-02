@@ -15,6 +15,14 @@ public class ShoppingPag  extends CommonActionOnpages {
     @FindBy(xpath="//*[@id=\"mega-menu-item-198556\"]/a")
     private WebElement menuOfertas;
 
+    @CacheLookup
+    @FindBy(xpath = "//option[@value=\"price\"]")
+    private WebElement filtroPrecioBajo;
+
+    @CacheLookup
+    @FindBy(xpath="//*[@name=\"orderby\" and @aria-label=\"Pedido de la tienda\"]")
+    private WebElement filtroProductos;
+
     private static final By btnAgregarCarrito = By.xpath("//*[@class=\"add-to-cart-button\"]");
 
 
@@ -28,7 +36,11 @@ public class ShoppingPag  extends CommonActionOnpages {
     }
     public void selectProductsRandom(int cant){
 
-            addWaitByVisibilityAllElement(btnAgregarCarrito,8);
+            addWaitByVisibility(filtroProductos,10);
+            click(filtroProductos);
+            addWaitByVisibility(filtroPrecioBajo,2);
+            click(filtroPrecioBajo);
+
             ArrayList<String> listProduct;
             listProduct = getTextElementsUnic(btnAgregarCarrito);//lista de botones disponibles para en viar al carrito
             Random random = new Random();

@@ -20,9 +20,8 @@ public class FormPayPage extends CommonActionOnpages {
     @FindBy(xpath = "//*[@id=\"customer_details\"]/div[1]/div/h3")
     private WebElement tituloDetallesPago;
 
-    @CacheLookup
-    @FindBy(xpath = "//tr[@class=\"cart-subtotal\"]/td/span")
-    private WebElement precioSubTotal;
+
+    private static final By precioSubTotal = By.xpath("//*[@id=\"order_review\"]/table/tfoot/tr[1]/td");
 
     //formulario
     @CacheLookup
@@ -57,9 +56,7 @@ public class FormPayPage extends CommonActionOnpages {
     @FindBy(id = "billing_phone")
     private WebElement telefono;
 
-    @CacheLookup
-    @FindBy(xpath = "//tr[@class=\"order-total\"]/td")
-    private WebElement precioTotalFacturado;
+    private By precioTotalFacturado = By.xpath("//*[@id=\"order_review\"]/table/tfoot/tr[4]/td");
 
     private static final By pagoBaloto = By.xpath("//label[@for=\"payment_method_bank_transfer_1\"]");
     private static final By radioButtonBaloto = By.id("payment_method_bank_transfer_1");
@@ -102,21 +99,22 @@ public class FormPayPage extends CommonActionOnpages {
 
             typeInto(telefono, customer.getPhone());
 
+
             while (getAtributeElement(radioButtonBaloto,"checked")==null){
-                addWaitByVisibility(pagoBaloto,4);
+                addWaitByVisibility(pagoBaloto,8);
                 scrollTo(pagoBaloto);
                 clickWithAccion(pagoBaloto);
            }
 
-
+            addWaitByVisibility(contenedorTerminosCondiciones,8);
             while(getAtributeElement(contenedorTerminosCondiciones,"class")
                   .equals("form-row validate-required")) {
-                addWaitByVisibility(checkBoxTerminos,4);
+                addWaitByVisibility(checkBoxTerminos,8);
                 scrollTo(contenedorTerminosCondiciones);
                 clickWithAccion(checkBoxTerminos);
             }
             scrollTo(btnRealizarPedido);
-            addwaitBeClickable(btnRealizarPedido,5);
+            addWaitByVisibility(btnRealizarPedido,8);
             clickWithAccion(btnRealizarPedido);
     }
 
@@ -127,6 +125,7 @@ public class FormPayPage extends CommonActionOnpages {
     }
 
     public int subTotalPrice(){
+        addWaitByVisibilityAllElement(precioProducto,5);
         ArrayList<String> listPriceFull = getTextElementsUnic(precioProducto);
         int subTotalPrice =0;
         for (String product : listPriceFull) {

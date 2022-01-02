@@ -24,19 +24,14 @@ public class CommonActionOnpages {
         await.until(ExpectedConditions.visibilityOf(webElement));
     }
 
-    protected  void addwaitBeClickable(By locator, int wait){
-        WebDriverWait await = new WebDriverWait(driver,wait);
-        await.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
     protected  void addWaitByVisibilityAllElement(By locator, int wait){
         WebDriverWait await = new WebDriverWait(driver,wait);
         await.until((ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)));
     }
 
-    protected  void addWaitByVisibilityAllElement(WebElement webElement, int wait){
+    protected  void addWaitByPresentDom(By locator, int wait){
         WebDriverWait await = new WebDriverWait(driver,wait);
-        await.until((ExpectedConditions.visibilityOfAllElementsLocatedBy((By) webElement)));
+        await.until((ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(driver.findElement(locator)))));
     }
     //accion
     protected void typeInto(By locator, String value){
@@ -69,10 +64,6 @@ public class CommonActionOnpages {
 
     protected  void pressEnter(By locator){driver.findElement(locator).sendKeys(Keys.ENTER);}
 
-    protected  void pressEnter(WebElement webElement){webElement.sendKeys(Keys.ENTER);}
-
-    protected  void pressScope(By locator){driver.findElement(locator).sendKeys(Keys.ESCAPE);}
-
     public void scrollTo(By locator){
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("arguments[0].scrollIntoView();", driver.findElement(locator));
@@ -98,7 +89,11 @@ public class CommonActionOnpages {
         return Integer.parseInt(getTex(webElement).replaceAll("[-+.^:,$]",
                 ""));
     }
-
+    protected int getTextToInt(By locator){
+        scrollTo(locator);
+        return Integer.parseInt(getTex(locator).replaceAll("[-+.^:,$]",
+                ""));
+    }
     protected ArrayList<String[]> getTextElements(By locator) {
         List<WebElement> elements = driver.findElements(locator);
         ArrayList<String[]> elementsText = new ArrayList<>();
